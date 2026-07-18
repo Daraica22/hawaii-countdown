@@ -1,1 +1,419 @@
-<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Hawaii Countdown</title><style>body{margin:0;font-family:Arial;background:linear-gradient(#48c6ef,#0b8795);color:#fff;display:flex;align-items:center;justify-content:center;height:100vh;text-align:center}#c{font-size:2.2rem;font-weight:bold}</style></head><body><div><h1>🌺 Hawaii Family Countdown 🌺</h1><div id='c'></div><p>David • Desiree • Mom</p><p>August 8, 2026</p></div><script>const t=new Date('2026-08-08T00:00:00-07:00').getTime();function u(){let d=t-Date.now();if(d<=0){document.getElementById('c').innerHTML='Aloha!';return;}let days=Math.floor(d/86400000),h=Math.floor(d/3600000)%24,m=Math.floor(d/60000)%60,s=Math.floor(d/1000)%60;document.getElementById('c').innerHTML=days+' Days<br>'+h+' Hours '+m+' Minutes '+s+' Seconds';}u();setInterval(u,1000);</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#6f274a" />
+  <meta property="og:title" content="Hawaii Family Countdown" />
+  <meta property="og:description" content="Counting down to Waikiki, Mom's 70th birthday, and our family adventure." />
+  <title>Hawaii Family Countdown</title>
+  <style>
+    :root{
+      --pink:#d77a9b;
+      --deep-pink:#6f274a;
+      --cream:#fff8ee;
+      --sand:#edd7b0;
+      --ocean:#0d7584;
+      --deep-ocean:#073f49;
+      --glass:rgba(255,255,255,.17);
+      --shadow:0 24px 70px rgba(23,34,44,.25);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:white;
+      background:
+        linear-gradient(180deg,rgba(7,55,69,.12),rgba(7,55,69,.7)),
+        radial-gradient(circle at 82% 12%,rgba(255,234,150,.95) 0 7%,transparent 8%),
+        linear-gradient(180deg,#7bd8eb 0%,#2a9cad 48%,#0d7584 100%);
+      min-height:100vh;
+    }
+    a{color:inherit}
+    .hero{
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:28px 18px 70px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero:after{
+      content:"";
+      position:absolute;
+      left:-8%;
+      right:-8%;
+      bottom:-80px;
+      height:220px;
+      background:linear-gradient(#f4dfb7,#e7c588);
+      border-radius:50% 50% 0 0/32% 32% 0 0;
+    }
+    .palm{
+      position:absolute;
+      left:4vw;
+      bottom:105px;
+      font-size:clamp(80px,12vw,150px);
+      transform:rotate(-8deg);
+      z-index:1;
+      filter:drop-shadow(0 12px 16px rgba(0,0,0,.18));
+    }
+    .shell{
+      width:min(1040px,100%);
+      z-index:2;
+      text-align:center;
+      padding:clamp(28px,5vw,58px);
+      border:1px solid rgba(255,255,255,.32);
+      border-radius:32px;
+      background:linear-gradient(145deg,rgba(255,255,255,.23),rgba(255,255,255,.08));
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+      box-shadow:var(--shadow);
+    }
+    .eyebrow{
+      margin:0 0 12px;
+      font-size:.78rem;
+      text-transform:uppercase;
+      letter-spacing:.24em;
+      font-weight:900;
+    }
+    h1{
+      margin:0;
+      font-size:clamp(2.8rem,9vw,6.3rem);
+      line-height:.93;
+      letter-spacing:-.055em;
+      text-shadow:0 10px 28px rgba(0,47,62,.25);
+    }
+    .lead{
+      max-width:720px;
+      margin:20px auto 0;
+      font-size:clamp(1rem,2.5vw,1.35rem);
+      line-height:1.55;
+    }
+    .names{
+      display:inline-block;
+      margin-top:18px;
+      padding:10px 16px;
+      border-radius:999px;
+      background:rgba(255,255,255,.16);
+      font-weight:800;
+    }
+    .countdown{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      margin:38px 0 24px;
+    }
+    .time{
+      background:rgba(255,255,255,.94);
+      color:var(--deep-ocean);
+      border-radius:22px;
+      padding:24px 10px 18px;
+      box-shadow:0 14px 30px rgba(0,54,66,.18);
+    }
+    .num{
+      display:block;
+      font-size:clamp(2rem,7vw,4.2rem);
+      line-height:1;
+      font-weight:950;
+      letter-spacing:-.04em;
+    }
+    .label{
+      display:block;
+      margin-top:9px;
+      font-size:.72rem;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-weight:900;
+      opacity:.68;
+    }
+    .tripline{
+      font-size:clamp(1rem,2.5vw,1.25rem);
+      font-weight:850;
+    }
+    .buttons{
+      margin-top:28px;
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+    .btn{
+      border:0;
+      border-radius:999px;
+      padding:14px 20px;
+      font:inherit;
+      font-weight:900;
+      cursor:pointer;
+      text-decoration:none;
+      transition:.2s ease;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .primary{background:linear-gradient(135deg,#ff6681,#d77a9b);color:white}
+    .secondary{background:white;color:var(--deep-ocean)}
+    #celebrate{display:none;font-size:clamp(2rem,6vw,4rem);font-weight:950;margin:34px 0 18px}
+    .section{
+      padding:76px 18px;
+      background:var(--cream);
+      color:#24343a;
+    }
+    .section.alt{background:#f7eee5}
+    .container{width:min(1080px,100%);margin:auto}
+    .section h2{
+      margin:0;
+      text-align:center;
+      color:var(--deep-pink);
+      font-size:clamp(2rem,5vw,3.3rem);
+      letter-spacing:-.035em;
+    }
+    .section-intro{
+      text-align:center;
+      max-width:720px;
+      margin:14px auto 38px;
+      line-height:1.6;
+      color:#536268;
+    }
+    .timeline{
+      display:grid;
+      gap:18px;
+    }
+    .day{
+      display:grid;
+      grid-template-columns:170px 1fr;
+      gap:22px;
+      background:white;
+      border-radius:24px;
+      padding:24px;
+      box-shadow:0 14px 36px rgba(76,59,44,.09);
+      border:1px solid rgba(111,39,74,.08);
+    }
+    .datebox{
+      border-radius:18px;
+      background:linear-gradient(145deg,#f4d8e4,#f3e6c8);
+      padding:20px;
+      color:var(--deep-pink);
+      font-weight:900;
+      text-align:center;
+      align-self:start;
+    }
+    .datebox .dow{font-size:.78rem;text-transform:uppercase;letter-spacing:.14em}
+    .datebox .datebig{font-size:1.8rem;margin-top:5px}
+    .events{display:grid;gap:15px}
+    .event{
+      padding-bottom:15px;
+      border-bottom:1px solid #eee3d8;
+    }
+    .event:last-child{padding-bottom:0;border-bottom:0}
+    .event h3{margin:0 0 6px;color:var(--deep-ocean);font-size:1.15rem}
+    .meta{font-weight:800;color:var(--deep-pink);margin-bottom:5px}
+    .event p{margin:0;line-height:1.5;color:#56656b}
+    .highlights{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+      margin-top:36px;
+    }
+    .highlight{
+      background:white;
+      border-radius:22px;
+      padding:24px;
+      text-align:center;
+      box-shadow:0 14px 36px rgba(76,59,44,.08);
+    }
+    .highlight .emoji{font-size:2.4rem}
+    .highlight h3{color:var(--deep-pink);margin:12px 0 8px}
+    .highlight p{margin:0;color:#5d696e;line-height:1.5}
+    footer{
+      background:var(--deep-ocean);
+      color:white;
+      text-align:center;
+      padding:30px 18px;
+    }
+    @media(max-width:720px){
+      .countdown{grid-template-columns:repeat(2,1fr)}
+      .day{grid-template-columns:1fr}
+      .datebox{text-align:left}
+      .highlights{grid-template-columns:1fr}
+      .palm{opacity:.45}
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="palm" aria-hidden="true">🌴</div>
+    <div class="shell">
+      <p class="eyebrow">Mom’s 70th Birthday Adventure</p>
+      <h1>Hawaii<br>Countdown</h1>
+      <p class="lead">Counting down to Waikiki sunshine, unforgettable family memories, and a very special birthday celebration.</p>
+      <div class="names">🌺 David • Desiree • Mom 🌺</div>
+
+      <div id="countdown" class="countdown" aria-live="polite">
+        <div class="time"><span id="days" class="num">00</span><span class="label">Days</span></div>
+        <div class="time"><span id="hours" class="num">00</span><span class="label">Hours</span></div>
+        <div class="time"><span id="minutes" class="num">00</span><span class="label">Minutes</span></div>
+        <div class="time"><span id="seconds" class="num">00</span><span class="label">Seconds</span></div>
+      </div>
+
+      <div id="celebrate">Aloha! It’s Hawaii time! 🌺🏝️</div>
+      <div class="tripline">August 8–13, 2026 • The Royal Hawaiian • Waikiki</div>
+
+      <div class="buttons">
+        <a class="btn primary" href="#itinerary">View Our Itinerary</a>
+        <button class="btn secondary" id="share">Share This Countdown</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="itinerary">
+    <div class="container">
+      <h2>Our Hawaii Itinerary</h2>
+      <p class="section-intro">A few of the moments we’re most excited about during our family stay in Waikiki.</p>
+
+      <div class="timeline">
+        <article class="day">
+          <div class="datebox">
+            <div class="dow">Saturday</div>
+            <div class="datebig">Aug 8</div>
+          </div>
+          <div class="events">
+            <div class="event">
+              <div class="meta">Arrival Day</div>
+              <h3>Check in at The Royal Hawaiian</h3>
+              <p>Settle into Waikiki and begin Mom’s 70th birthday adventure at the historic Pink Palace of the Pacific.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="day">
+          <div class="datebox">
+            <div class="dow">Sunday</div>
+            <div class="datebig">Aug 9</div>
+          </div>
+          <div class="events">
+            <div class="event">
+              <div class="meta">6:30 AM</div>
+              <h3>Royal Beach Day</h3>
+              <p>All-day beach setup with two umbrellas and four chairs at the Royal Beach.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="day">
+          <div class="datebox">
+            <div class="dow">Monday</div>
+            <div class="datebig">Aug 10</div>
+          </div>
+          <div class="events">
+            <div class="event">
+              <div class="meta">9:15 AM check-in • 9:55 AM pickup</div>
+              <h3>Salute to Pearl Harbor</h3>
+              <p>Morning tour with pickup at 340 Royal Hawaiian Avenue.</p>
+            </div>
+            <div class="event">
+              <div class="meta">4:30 PM check-in</div>
+              <h3>Ahaʻaina Royal Luau</h3>
+              <p>Premium seating for an evening of Hawaiian culture, dining, music, and celebration at The Royal Hawaiian.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="day">
+          <div class="datebox">
+            <div class="dow">Tuesday</div>
+            <div class="datebig">Aug 11</div>
+          </div>
+          <div class="events">
+            <div class="event">
+              <div class="meta">7:30 AM check-in • 8:05 AM pickup</div>
+              <h3>Majestic Circle Island Tour</h3>
+              <p>Full-day island sightseeing with pickup at Sheraton Waikiki’s Aloha Landing.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="day">
+          <div class="datebox">
+            <div class="dow">Wednesday–Thursday</div>
+            <div class="datebig">Aug 12–13</div>
+          </div>
+          <div class="events">
+            <div class="event">
+              <div class="meta">Free Time</div>
+              <h3>Waikiki, Shopping & Family Time</h3>
+              <p>Time to relax, explore, enjoy great meals, and make the most of our final days in paradise.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <h2>Trip Highlights</h2>
+      <p class="section-intro">Sunshine, history, island scenery, and a milestone birthday—all in one unforgettable family trip.</p>
+      <div class="highlights">
+        <div class="highlight">
+          <div class="emoji">🏨</div>
+          <h3>The Royal Hawaiian</h3>
+          <p>Our Waikiki home at the iconic Pink Palace of the Pacific.</p>
+        </div>
+        <div class="highlight">
+          <div class="emoji">🎂</div>
+          <h3>Mom’s 70th Birthday</h3>
+          <p>A milestone celebration surrounded by family and island beauty.</p>
+        </div>
+        <div class="highlight">
+          <div class="emoji">🌺</div>
+          <h3>Island Memories</h3>
+          <p>Beach time, Pearl Harbor, a royal luau, and an Oʻahu circle tour.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Made with aloha for David, Desiree, and Mom 🌺
+  </footer>
+
+  <script>
+    const tripDate = new Date("2026-08-08T00:00:00-07:00").getTime();
+
+    function updateCountdown(){
+      const distance = tripDate - Date.now();
+      if(distance <= 0){
+        document.getElementById("countdown").style.display = "none";
+        document.getElementById("celebrate").style.display = "block";
+        return;
+      }
+      const values = {
+        days: Math.floor(distance / 86400000),
+        hours: Math.floor((distance / 3600000) % 24),
+        minutes: Math.floor((distance / 60000) % 60),
+        seconds: Math.floor((distance / 1000) % 60)
+      };
+      Object.entries(values).forEach(([id,value])=>{
+        document.getElementById(id).textContent = String(value).padStart(2,"0");
+      });
+    }
+    updateCountdown();
+    setInterval(updateCountdown,1000);
+
+    document.getElementById("share").addEventListener("click", async ()=>{
+      const data = {
+        title:"Hawaii Family Countdown",
+        text:"Our Hawaii family trip is almost here! 🌺🏝️",
+        url:window.location.href
+      };
+      try{
+        if(navigator.share){
+          await navigator.share(data);
+        }else{
+          await navigator.clipboard.writeText(window.location.href);
+          alert("Countdown link copied!");
+        }
+      }catch(e){}
+    });
+  </script>
+</body>
+</html>
