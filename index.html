@@ -1,419 +1,880 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#6f274a" />
-  <meta property="og:title" content="Hawaii Family Countdown" />
-  <meta property="og:description" content="Counting down to Waikiki, Mom's 70th birthday, and our family adventure." />
-  <title>Hawaii Family Countdown</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#702447">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Hawaii Trip">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta property="og:title" content="Hawaii Family Vacation">
+  <meta property="og:description" content="Our Waikiki countdown, itinerary, weather, packing list, restaurant guide, and family memories.">
+  <title>Hawaii Family Vacation</title>
   <style>
     :root{
-      --pink:#d77a9b;
-      --deep-pink:#6f274a;
-      --cream:#fff8ee;
-      --sand:#edd7b0;
-      --ocean:#0d7584;
-      --deep-ocean:#073f49;
-      --glass:rgba(255,255,255,.17);
-      --shadow:0 24px 70px rgba(23,34,44,.25);
+      --pink:#d9799d;--deep:#702447;--ocean:#0b7482;--ocean2:#06434d;
+      --cream:#fff9f0;--sand:#efd9b2;--ink:#26373d;--muted:#607078;
+      --card:#fff;--shadow:0 18px 55px rgba(30,48,56,.13);
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      color:white;
-      background:
-        linear-gradient(180deg,rgba(7,55,69,.12),rgba(7,55,69,.7)),
-        radial-gradient(circle at 82% 12%,rgba(255,234,150,.95) 0 7%,transparent 8%),
-        linear-gradient(180deg,#7bd8eb 0%,#2a9cad 48%,#0d7584 100%);
-      min-height:100vh;
-    }
+    body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--cream)}
     a{color:inherit}
     .hero{
-      min-height:100vh;
-      display:grid;
-      place-items:center;
-      padding:28px 18px 70px;
-      position:relative;
-      overflow:hidden;
+      min-height:100svh;color:#fff;display:grid;place-items:center;position:relative;overflow:hidden;
+      padding:35px 18px 80px;
+      background:
+        radial-gradient(circle at 80% 12%,rgba(255,232,143,.98) 0 6%,rgba(255,232,143,.18) 7%,transparent 17%),
+        linear-gradient(180deg,rgba(4,63,76,.04),rgba(4,63,76,.75)),
+        linear-gradient(180deg,#80d8e7 0%,#27a4b5 48%,#08717e 100%);
     }
-    .hero:after{
-      content:"";
-      position:absolute;
-      left:-8%;
-      right:-8%;
-      bottom:-80px;
-      height:220px;
-      background:linear-gradient(#f4dfb7,#e7c588);
-      border-radius:50% 50% 0 0/32% 32% 0 0;
+    .hero:after{content:"";position:absolute;bottom:-88px;left:-10%;right:-10%;height:230px;background:linear-gradient(#f5e3c0,#e4c083);border-radius:50% 50% 0 0/35% 35% 0 0}
+    .palm{position:absolute;left:3vw;bottom:110px;font-size:clamp(95px,14vw,180px);transform:rotate(-8deg);filter:drop-shadow(0 15px 17px rgba(0,0,0,.2));z-index:1}
+    .hero-card{z-index:2;width:min(1080px,100%);text-align:center;padding:clamp(28px,5vw,58px);border:1px solid rgba(255,255,255,.32);border-radius:34px;background:linear-gradient(145deg,rgba(255,255,255,.24),rgba(255,255,255,.09));backdrop-filter:blur(18px);box-shadow:0 28px 75px rgba(0,42,53,.26)}
+    .eyebrow{margin:0 0 12px;text-transform:uppercase;letter-spacing:.24em;font-size:.76rem;font-weight:900}
+    h1{margin:0;font-size:clamp(3rem,9vw,6.8rem);line-height:.9;letter-spacing:-.06em;text-shadow:0 12px 32px rgba(0,51,63,.25)}
+    .lead{font-size:clamp(1rem,2.7vw,1.36rem);line-height:1.55;max-width:760px;margin:22px auto 0}
+    .pill{display:inline-flex;gap:8px;align-items:center;margin-top:18px;padding:10px 16px;border-radius:999px;background:rgba(255,255,255,.16);font-weight:850}
+    .countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:38px 0 24px}
+    .time{background:rgba(255,255,255,.95);color:var(--ocean2);border-radius:22px;padding:24px 10px 18px;box-shadow:0 14px 30px rgba(0,54,66,.17)}
+    .num{display:block;font-size:clamp(2rem,7vw,4.2rem);font-weight:950;line-height:1;letter-spacing:-.04em}
+    .label{display:block;margin-top:9px;font-size:.7rem;text-transform:uppercase;letter-spacing:.14em;font-weight:900;opacity:.65}
+    .tripline{font-size:clamp(1rem,2.5vw,1.23rem);font-weight:850}
+    .buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:11px;margin-top:27px}
+    .btn{border:0;border-radius:999px;padding:14px 19px;font:inherit;font-weight:900;cursor:pointer;text-decoration:none;transition:.18s transform,.18s opacity}
+    .btn:hover{transform:translateY(-2px)} .btn.primary{color:#fff;background:linear-gradient(135deg,#ff6f88,var(--pink))}.btn.light{background:#fff;color:var(--ocean2)}.btn.outline{background:transparent;color:inherit;border:1px solid currentColor}
+    .section{padding:78px 18px;background:var(--cream)} .section.alt{background:#f7eee5}.section.dark{background:var(--ocean2);color:#fff}
+    .container{width:min(1100px,100%);margin:auto}
+    .section h2{text-align:center;color:var(--deep);font-size:clamp(2rem,5vw,3.4rem);letter-spacing:-.04em;margin:0}
+    .section.dark h2{color:#fff}
+    .intro{text-align:center;max-width:760px;margin:14px auto 38px;line-height:1.6;color:var(--muted)} .section.dark .intro{color:rgba(255,255,255,.77)}
+    .today-card{background:linear-gradient(145deg,#fff,#fff7ef);padding:28px;border-radius:28px;box-shadow:var(--shadow);border:1px solid rgba(112,36,71,.08)}
+    .today-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .today-label{text-transform:uppercase;letter-spacing:.17em;font-size:.75rem;color:var(--deep);font-weight:950}
+    .today-card h3{font-size:clamp(1.8rem,4vw,3rem);margin:8px 0;color:var(--ocean2)}
+    .today-card p{line-height:1.55;color:var(--muted);margin:7px 0}
+    .mini-list{display:grid;gap:10px;margin-top:16px}.mini-item{background:#f8eee4;border-radius:15px;padding:13px 15px;font-weight:780}
+    .weather-panel{background:linear-gradient(145deg,#0e8190,#075563);color:#fff;border-radius:28px;padding:28px;box-shadow:var(--shadow)}
+    .weather-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+    .weather-temp{font-size:clamp(3.6rem,10vw,6rem);font-weight:950;line-height:.9}
+    .weather-desc{font-weight:850;margin-top:7px}
+    .weather-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+    .weather-stat{background:rgba(255,255,255,.12);padding:13px;border-radius:14px}.weather-stat small{display:block;opacity:.7}.weather-stat strong{display:block;margin-top:4px}
+    .status{margin-top:14px;font-size:.9rem;opacity:.82}
+    .timeline{display:grid;gap:18px}
+    .day{display:grid;grid-template-columns:175px 1fr;gap:22px;background:#fff;border-radius:24px;padding:24px;box-shadow:var(--shadow)}
+    .datebox{background:linear-gradient(145deg,#f4d7e3,#f3e5c7);border-radius:18px;padding:20px;color:var(--deep);font-weight:950;text-align:center;align-self:start}.datebox .dow{text-transform:uppercase;letter-spacing:.13em;font-size:.75rem}.datebox .big{font-size:1.8rem;margin-top:5px}
+    .events{display:grid;gap:15px}.event{padding-bottom:15px;border-bottom:1px solid #eee3d8}.event:last-child{border:0;padding-bottom:0}.event h3{margin:0 0 5px;color:var(--ocean2)}.meta{color:var(--deep);font-weight:900;margin-bottom:5px}.event p{margin:0;line-height:1.5;color:var(--muted)}
+    .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:#fff;border-radius:22px;padding:24px;box-shadow:var(--shadow)}
+    .card h3{margin:10px 0 8px;color:var(--deep)}.card p{margin:0;color:var(--muted);line-height:1.5}.emoji{font-size:2.2rem}
+    .link-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}.chip{display:inline-block;padding:9px 12px;border-radius:999px;background:#f3e7dd;color:var(--ocean2);font-weight:850;text-decoration:none;font-size:.87rem}
+    .packing-top{display:flex;align-items:center;justify-content:space-between;gap:20px;background:#fff;border-radius:22px;padding:21px 24px;box-shadow:var(--shadow);margin-bottom:18px}
+    .progress-track{height:14px;background:#eee1d7;border-radius:999px;overflow:hidden;flex:1}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--pink),#ff778b);transition:width .25s}.progress-text{font-weight:950;color:var(--deep);min-width:55px;text-align:right}
+    .packing-groups{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.packing-group{background:#fff;border-radius:22px;padding:24px;box-shadow:var(--shadow)}.packing-group h3{margin:0 0 16px;color:var(--deep)}
+    .checklist{display:grid;gap:11px}.check-item{display:flex;gap:11px;align-items:flex-start;line-height:1.35;color:#47585f;cursor:pointer}.check-item input{width:20px;height:20px;margin:0;accent-color:var(--deep)}.check-item:has(input:checked) span{text-decoration:line-through;opacity:.5}
+    .map-grid,.restaurant-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .place{background:#fff;border-radius:22px;padding:22px;box-shadow:var(--shadow)}.place h3{margin:0;color:var(--ocean2)}.place p{color:var(--muted);line-height:1.45}
+    .memory-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.memory{background:#fff;border-radius:22px;padding:18px;box-shadow:var(--shadow)}.photo-frame{aspect-ratio:4/3;border-radius:16px;background:linear-gradient(145deg,#e9d7c4,#d7edf0);display:grid;place-items:center;overflow:hidden;color:#58696f;font-weight:850;text-align:center;padding:12px}.photo-frame img{width:100%;height:100%;object-fit:cover}.memory input{width:100%;margin-top:12px}.memory textarea{width:100%;min-height:76px;margin-top:10px;border:1px solid #ddd0c4;border-radius:12px;padding:11px;font:inherit}
+    .birthday{background:linear-gradient(145deg,#78274e,#b94f75);color:#fff;border-radius:30px;padding:clamp(28px,5vw,55px);text-align:center;box-shadow:0 22px 65px rgba(112,36,71,.25)}.birthday h3{font-size:clamp(2.1rem,6vw,4rem);margin:8px 0}.birthday p{max-width:750px;margin:14px auto;line-height:1.6;color:rgba(255,255,255,.86)}
+    .footer{background:#053b44;color:#fff;text-align:center;padding:30px 18px}
+    .small{font-size:.9rem;color:var(--muted)} .section.dark .small{color:rgba(255,255,255,.68)}
+
+    .packing-profile-bar,.suggestions-box{display:flex;justify-content:space-between;gap:18px;align-items:center;background:#fff;border-radius:22px;padding:22px 24px;box-shadow:var(--shadow);margin-bottom:18px}
+    .profile-actions,.packing-editor-actions{display:flex;flex-wrap:wrap;gap:10px}
+    .packing-editor-actions{justify-content:center;margin-top:22px}
+    .suggestions-box{align-items:flex-start;flex-direction:column}
+    .suggestion-list{display:flex;flex-wrap:wrap;gap:10px}
+    .suggestion-chip{border:0;border-radius:999px;padding:10px 13px;background:#f3e7dd;color:var(--ocean2);font:inherit;font-weight:850;cursor:pointer}
+    .suggestion-chip.added{opacity:.45;text-decoration:line-through}
+    .packing-group{position:relative}
+    .packing-group-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .packing-group-actions,.packing-item-actions{display:flex;gap:6px}
+    .icon-btn{border:0;background:#f4e8de;color:var(--deep);border-radius:10px;padding:7px 9px;cursor:pointer;font-weight:900}
+    .packing-row{display:flex;align-items:flex-start;gap:9px;padding:6px 0}
+    .packing-row .check-item{flex:1}
+    .packing-item-actions{opacity:.7}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,31,37,.66);display:none;place-items:center;z-index:999;padding:18px}
+    .modal-backdrop.open{display:grid}
+    .modal-card{position:relative;width:min(560px,100%);background:#fff;border-radius:28px;padding:30px;box-shadow:0 30px 90px rgba(0,0,0,.35)}
+    .modal-close{position:absolute;top:12px;right:14px;border:0;background:transparent;font-size:2rem;color:var(--muted);cursor:pointer}
+    .traveler-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .traveler-option{border:1px solid #eadfd5;background:#fffaf5;border-radius:18px;padding:22px;cursor:pointer;font:inherit;display:grid;gap:8px;place-items:center}
+    .traveler-option span{font-size:2.2rem}.traveler-option strong{color:var(--deep);font-size:1.05rem}
+
+
+    .tonight-pick{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;background:linear-gradient(135deg,#073b45,#0d6671);color:#fff;border-radius:26px;padding:26px;box-shadow:var(--shadow);margin:22px 0}
+    .tonight-pick h3{font-size:1.8rem;margin:6px 0 8px}.tonight-pick p{margin:0;color:#e9f8f7}
+    .tonight-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+    .tonight-meta span,.badge{display:inline-flex;align-items:center;border-radius:999px;padding:7px 10px;font-size:.82rem;font-weight:850}
+    .tonight-meta span{background:rgba(255,255,255,.13);color:#fff}
+    .tonight-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+    .dining-filters{display:flex;gap:9px;overflow-x:auto;padding:5px 0 14px;scrollbar-width:none}
+    .dining-filters::-webkit-scrollbar{display:none}
+    .filter-btn{white-space:nowrap;border:1px solid #dfd3c7;background:#fff;border-radius:999px;padding:10px 14px;font:inherit;font-weight:850;color:var(--deep);cursor:pointer}
+    .filter-btn.active{background:var(--deep);border-color:var(--deep);color:#fff}
+    .restaurant-grid.v5{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .restaurant-card{background:#fff;border-radius:24px;padding:22px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:13px}
+    .restaurant-card.hidden{display:none}
+    .restaurant-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+    .restaurant-head h3{margin:0;color:var(--deep);font-size:1.3rem}
+    .heart-btn{border:0;background:#f6ece4;border-radius:50%;width:40px;height:40px;font-size:1.15rem;cursor:pointer}
+    .heart-btn.saved{background:#ffe1df}
+    .restaurant-sub{color:var(--muted);font-size:.94rem;margin:-4px 0 0}
+    .badge-row{display:flex;flex-wrap:wrap;gap:7px}
+    .badge{background:#f3e7dd;color:var(--ocean2)}
+    .restaurant-card p{margin:0;color:#425f64}
+    .known-for{font-weight:800;color:var(--deep)}
+    .restaurant-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .restaurant-actions .chip{cursor:pointer;border:0;font:inherit}
+    .rating-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:4px;border-top:1px solid #eee3da}
+    .stars{display:flex;gap:3px}
+    .star{border:0;background:transparent;font-size:1.35rem;cursor:pointer;color:#c8c1bb;padding:1px}
+    .star.on{color:#e7a92f}
+    .restaurant-note{width:100%;min-height:78px;resize:vertical;border:1px solid #dfd3c7;border-radius:14px;padding:11px;font:inherit;background:#fffdfb}
+    .photo-upload-label{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+    .dish-preview{display:none;width:100%;height:150px;object-fit:cover;border-radius:15px}
+    .dish-preview.show{display:block}
+    .small-note{font-size:.82rem;color:var(--muted)}
+    .section-kicker{text-align:center;text-transform:uppercase;letter-spacing:.15em;font-size:.76rem;font-weight:900;color:var(--coral)}
+
+    @media(max-width:820px){
+      .countdown{grid-template-columns:repeat(2,1fr)}.today-grid,.map-grid,.restaurant-grid{grid-template-columns:1fr}.card-grid{grid-template-columns:1fr 1fr}.packing-groups{grid-template-columns:1fr}.packing-profile-bar{align-items:flex-start;flex-direction:column}.tonight-pick{grid-template-columns:1fr}.tonight-actions{justify-content:flex-start}.restaurant-grid.v5{grid-template-columns:1fr}.memory-grid{grid-template-columns:1fr 1fr}.day{grid-template-columns:1fr}.datebox{text-align:left}.palm{opacity:.42}
     }
-    .palm{
-      position:absolute;
-      left:4vw;
-      bottom:105px;
-      font-size:clamp(80px,12vw,150px);
-      transform:rotate(-8deg);
-      z-index:1;
-      filter:drop-shadow(0 12px 16px rgba(0,0,0,.18));
-    }
-    .shell{
-      width:min(1040px,100%);
-      z-index:2;
-      text-align:center;
-      padding:clamp(28px,5vw,58px);
-      border:1px solid rgba(255,255,255,.32);
-      border-radius:32px;
-      background:linear-gradient(145deg,rgba(255,255,255,.23),rgba(255,255,255,.08));
-      backdrop-filter:blur(18px);
-      -webkit-backdrop-filter:blur(18px);
-      box-shadow:var(--shadow);
-    }
-    .eyebrow{
-      margin:0 0 12px;
-      font-size:.78rem;
-      text-transform:uppercase;
-      letter-spacing:.24em;
-      font-weight:900;
-    }
-    h1{
-      margin:0;
-      font-size:clamp(2.8rem,9vw,6.3rem);
-      line-height:.93;
-      letter-spacing:-.055em;
-      text-shadow:0 10px 28px rgba(0,47,62,.25);
-    }
-    .lead{
-      max-width:720px;
-      margin:20px auto 0;
-      font-size:clamp(1rem,2.5vw,1.35rem);
-      line-height:1.55;
-    }
-    .names{
-      display:inline-block;
-      margin-top:18px;
-      padding:10px 16px;
-      border-radius:999px;
-      background:rgba(255,255,255,.16);
-      font-weight:800;
-    }
-    .countdown{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:14px;
-      margin:38px 0 24px;
-    }
-    .time{
-      background:rgba(255,255,255,.94);
-      color:var(--deep-ocean);
-      border-radius:22px;
-      padding:24px 10px 18px;
-      box-shadow:0 14px 30px rgba(0,54,66,.18);
-    }
-    .num{
-      display:block;
-      font-size:clamp(2rem,7vw,4.2rem);
-      line-height:1;
-      font-weight:950;
-      letter-spacing:-.04em;
-    }
-    .label{
-      display:block;
-      margin-top:9px;
-      font-size:.72rem;
-      text-transform:uppercase;
-      letter-spacing:.14em;
-      font-weight:900;
-      opacity:.68;
-    }
-    .tripline{
-      font-size:clamp(1rem,2.5vw,1.25rem);
-      font-weight:850;
-    }
-    .buttons{
-      margin-top:28px;
-      display:flex;
-      justify-content:center;
-      flex-wrap:wrap;
-      gap:12px;
-    }
-    .btn{
-      border:0;
-      border-radius:999px;
-      padding:14px 20px;
-      font:inherit;
-      font-weight:900;
-      cursor:pointer;
-      text-decoration:none;
-      transition:.2s ease;
-    }
-    .btn:hover{transform:translateY(-2px)}
-    .primary{background:linear-gradient(135deg,#ff6681,#d77a9b);color:white}
-    .secondary{background:white;color:var(--deep-ocean)}
-    #celebrate{display:none;font-size:clamp(2rem,6vw,4rem);font-weight:950;margin:34px 0 18px}
-    .section{
-      padding:76px 18px;
-      background:var(--cream);
-      color:#24343a;
-    }
-    .section.alt{background:#f7eee5}
-    .container{width:min(1080px,100%);margin:auto}
-    .section h2{
-      margin:0;
-      text-align:center;
-      color:var(--deep-pink);
-      font-size:clamp(2rem,5vw,3.3rem);
-      letter-spacing:-.035em;
-    }
-    .section-intro{
-      text-align:center;
-      max-width:720px;
-      margin:14px auto 38px;
-      line-height:1.6;
-      color:#536268;
-    }
-    .timeline{
-      display:grid;
-      gap:18px;
-    }
-    .day{
-      display:grid;
-      grid-template-columns:170px 1fr;
-      gap:22px;
-      background:white;
-      border-radius:24px;
-      padding:24px;
-      box-shadow:0 14px 36px rgba(76,59,44,.09);
-      border:1px solid rgba(111,39,74,.08);
-    }
-    .datebox{
-      border-radius:18px;
-      background:linear-gradient(145deg,#f4d8e4,#f3e6c8);
-      padding:20px;
-      color:var(--deep-pink);
-      font-weight:900;
-      text-align:center;
-      align-self:start;
-    }
-    .datebox .dow{font-size:.78rem;text-transform:uppercase;letter-spacing:.14em}
-    .datebox .datebig{font-size:1.8rem;margin-top:5px}
-    .events{display:grid;gap:15px}
-    .event{
-      padding-bottom:15px;
-      border-bottom:1px solid #eee3d8;
-    }
-    .event:last-child{padding-bottom:0;border-bottom:0}
-    .event h3{margin:0 0 6px;color:var(--deep-ocean);font-size:1.15rem}
-    .meta{font-weight:800;color:var(--deep-pink);margin-bottom:5px}
-    .event p{margin:0;line-height:1.5;color:#56656b}
-    .highlights{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:18px;
-      margin-top:36px;
-    }
-    .highlight{
-      background:white;
-      border-radius:22px;
-      padding:24px;
-      text-align:center;
-      box-shadow:0 14px 36px rgba(76,59,44,.08);
-    }
-    .highlight .emoji{font-size:2.4rem}
-    .highlight h3{color:var(--deep-pink);margin:12px 0 8px}
-    .highlight p{margin:0;color:#5d696e;line-height:1.5}
-    footer{
-      background:var(--deep-ocean);
-      color:white;
-      text-align:center;
-      padding:30px 18px;
-    }
-    @media(max-width:720px){
-      .countdown{grid-template-columns:repeat(2,1fr)}
-      .day{grid-template-columns:1fr}
-      .datebox{text-align:left}
-      .highlights{grid-template-columns:1fr}
-      .palm{opacity:.45}
-    }
+    @media(max-width:520px){.card-grid,.memory-grid{grid-template-columns:1fr}.weather-grid{grid-template-columns:repeat(2,1fr)}}
   </style>
 </head>
 <body>
-  <section class="hero">
-    <div class="palm" aria-hidden="true">🌴</div>
-    <div class="shell">
+  <section class="hero" id="home">
+    <div class="palm">🌴</div>
+    <div class="hero-card">
       <p class="eyebrow">Mom’s 70th Birthday Adventure</p>
-      <h1>Hawaii<br>Countdown</h1>
-      <p class="lead">Counting down to Waikiki sunshine, unforgettable family memories, and a very special birthday celebration.</p>
-      <div class="names">🌺 David • Desiree • Mom 🌺</div>
-
-      <div id="countdown" class="countdown" aria-live="polite">
-        <div class="time"><span id="days" class="num">00</span><span class="label">Days</span></div>
-        <div class="time"><span id="hours" class="num">00</span><span class="label">Hours</span></div>
-        <div class="time"><span id="minutes" class="num">00</span><span class="label">Minutes</span></div>
-        <div class="time"><span id="seconds" class="num">00</span><span class="label">Seconds</span></div>
+      <h1>Hawaii<br>Companion</h1>
+      <p class="lead" id="welcomeMessage">Counting down to Waikiki sunshine, family memories, and a very special celebration.</p>
+      <div class="pill">🌺 David • Desiree • Mom 🌺</div>
+      <div class="countdown" id="countdown">
+        <div class="time"><span class="num" id="days">00</span><span class="label">Days</span></div>
+        <div class="time"><span class="num" id="hours">00</span><span class="label">Hours</span></div>
+        <div class="time"><span class="num" id="minutes">00</span><span class="label">Minutes</span></div>
+        <div class="time"><span class="num" id="seconds">00</span><span class="label">Seconds</span></div>
       </div>
-
-      <div id="celebrate">Aloha! It’s Hawaii time! 🌺🏝️</div>
       <div class="tripline">August 8–13, 2026 • The Royal Hawaiian • Waikiki</div>
-
       <div class="buttons">
-        <a class="btn primary" href="#itinerary">View Our Itinerary</a>
-        <button class="btn secondary" id="share">Share This Countdown</button>
+        <a class="btn primary" href="#today">Today’s Adventure</a>
+        <a class="btn light" href="#itinerary">Itinerary</a>
+        <a class="btn light" href="#packing">Packing</a>
+        <button class="btn light" id="share">Share</button>
       </div>
     </div>
   </section>
 
-  <section class="section" id="itinerary">
+  <section class="section" id="today">
     <div class="container">
-      <h2>Our Hawaii Itinerary</h2>
-      <p class="section-intro">A few of the moments we’re most excited about during our family stay in Waikiki.</p>
+      <h2>Today’s Adventure</h2>
+      <p class="intro">This section changes automatically before, during, and after the trip.</p>
+      <div class="today-grid">
+        <article class="today-card">
+          <div class="today-label" id="todayLabel">Trip preparation</div>
+          <h3 id="todayTitle">Hawaii is getting closer</h3>
+          <p id="todayText">Start packing, review the itinerary, and get ready for Waikiki.</p>
+          <div class="mini-list" id="todayItems"></div>
+        </article>
+        <article class="weather-panel">
+          <div class="weather-top">
+            <div>
+              <div class="today-label" style="color:#fff">Live Waikiki Weather</div>
+              <div class="weather-desc" id="weatherDesc">Loading current conditions…</div>
+            </div>
+            <div class="weather-temp" id="weatherTemp">--°</div>
+          </div>
+          <div class="weather-grid">
+            <div class="weather-stat"><small>Feels like</small><strong id="feels">--°</strong></div>
+            <div class="weather-stat"><small>Humidity</small><strong id="humidity">--%</strong></div>
+            <div class="weather-stat"><small>Wind</small><strong id="wind">-- mph</strong></div>
+            <div class="weather-stat"><small>Rain chance</small><strong id="rain">--%</strong></div>
+            <div class="weather-stat"><small>UV max</small><strong id="uv">--</strong></div>
+            <div class="weather-stat"><small>Sunset</small><strong id="sunset">--</strong></div>
+          </div>
+          <div class="status" id="weatherStatus">Weather updates automatically when an internet connection is available.</div>
+          <div class="link-row">
+            <a class="chip" target="_blank" rel="noopener" href="https://www.weather.gov/hfo/">NWS Honolulu</a>
+            <a class="chip" target="_blank" rel="noopener" href="https://www.weather.gov/hfo/SRF">Official Surf Forecast</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
 
+  <section class="section alt" id="itinerary">
+    <div class="container">
+      <h2>Our Itinerary</h2>
+      <p class="intro">The key plans for our family stay, with public-facing details only.</p>
       <div class="timeline">
-        <article class="day">
-          <div class="datebox">
-            <div class="dow">Saturday</div>
-            <div class="datebig">Aug 8</div>
-          </div>
-          <div class="events">
-            <div class="event">
-              <div class="meta">Arrival Day</div>
-              <h3>Check in at The Royal Hawaiian</h3>
-              <p>Settle into Waikiki and begin Mom’s 70th birthday adventure at the historic Pink Palace of the Pacific.</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="day">
-          <div class="datebox">
-            <div class="dow">Sunday</div>
-            <div class="datebig">Aug 9</div>
-          </div>
-          <div class="events">
-            <div class="event">
-              <div class="meta">6:30 AM</div>
-              <h3>Royal Beach Day</h3>
-              <p>All-day beach setup with two umbrellas and four chairs at the Royal Beach.</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="day">
-          <div class="datebox">
-            <div class="dow">Monday</div>
-            <div class="datebig">Aug 10</div>
-          </div>
-          <div class="events">
-            <div class="event">
-              <div class="meta">9:15 AM check-in • 9:55 AM pickup</div>
-              <h3>Salute to Pearl Harbor</h3>
-              <p>Morning tour with pickup at 340 Royal Hawaiian Avenue.</p>
-            </div>
-            <div class="event">
-              <div class="meta">4:30 PM check-in</div>
-              <h3>Ahaʻaina Royal Luau</h3>
-              <p>Premium seating for an evening of Hawaiian culture, dining, music, and celebration at The Royal Hawaiian.</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="day">
-          <div class="datebox">
-            <div class="dow">Tuesday</div>
-            <div class="datebig">Aug 11</div>
-          </div>
-          <div class="events">
-            <div class="event">
-              <div class="meta">7:30 AM check-in • 8:05 AM pickup</div>
-              <h3>Majestic Circle Island Tour</h3>
-              <p>Full-day island sightseeing with pickup at Sheraton Waikiki’s Aloha Landing.</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="day">
-          <div class="datebox">
-            <div class="dow">Wednesday–Thursday</div>
-            <div class="datebig">Aug 12–13</div>
-          </div>
-          <div class="events">
-            <div class="event">
-              <div class="meta">Free Time</div>
-              <h3>Waikiki, Shopping & Family Time</h3>
-              <p>Time to relax, explore, enjoy great meals, and make the most of our final days in paradise.</p>
-            </div>
-          </div>
-        </article>
+        <article class="day"><div class="datebox"><div class="dow">Saturday</div><div class="big">Aug 8</div></div><div class="events"><div class="event"><div class="meta">Arrival Day</div><h3>Welcome to Waikiki</h3><p>Check in at The Royal Hawaiian, settle in, and begin Mom’s birthday adventure.</p></div></div></article>
+        <article class="day"><div class="datebox"><div class="dow">Sunday</div><div class="big">Aug 9</div></div><div class="events"><div class="event"><div class="meta">6:30 AM</div><h3>Royal Beach Day</h3><p>All-day beach setup with two umbrellas and four chairs at the Royal Beach.</p></div></div></article>
+        <article class="day"><div class="datebox"><div class="dow">Monday</div><div class="big">Aug 10</div></div><div class="events"><div class="event"><div class="meta">9:15 AM check-in • 9:55 AM pickup</div><h3>Salute to Pearl Harbor</h3><p>Morning tour with pickup at 340 Royal Hawaiian Avenue.</p></div><div class="event"><div class="meta">4:30 PM check-in</div><h3>Ahaʻaina Royal Luau</h3><p>Premium seating for an evening of Hawaiian culture, dining, music, and celebration.</p></div></div></article>
+        <article class="day"><div class="datebox"><div class="dow">Tuesday</div><div class="big">Aug 11</div></div><div class="events"><div class="event"><div class="meta">7:30 AM check-in • 8:05 AM pickup</div><h3>Majestic Circle Island Tour</h3><p>Full-day island sightseeing with pickup at Sheraton Waikiki’s Aloha Landing.</p></div></div></article>
+        <article class="day"><div class="datebox"><div class="dow">Wed–Thu</div><div class="big">Aug 12–13</div></div><div class="events"><div class="event"><div class="meta">Flexible Time</div><h3>Waikiki, Shopping & Family Time</h3><p>Relax, explore, enjoy memorable meals, and make the most of our final days in paradise.</p></div></div></article>
       </div>
     </div>
   </section>
 
-  <section class="section alt">
+  <section class="section" id="conditions">
     <div class="container">
-      <h2>Trip Highlights</h2>
-      <p class="section-intro">Sunshine, history, island scenery, and a milestone birthday—all in one unforgettable family trip.</p>
-      <div class="highlights">
-        <div class="highlight">
-          <div class="emoji">🏨</div>
-          <h3>The Royal Hawaiian</h3>
-          <p>Our Waikiki home at the iconic Pink Palace of the Pacific.</p>
-        </div>
-        <div class="highlight">
-          <div class="emoji">🎂</div>
-          <h3>Mom’s 70th Birthday</h3>
-          <p>A milestone celebration surrounded by family and island beauty.</p>
-        </div>
-        <div class="highlight">
-          <div class="emoji">🌺</div>
-          <h3>Island Memories</h3>
-          <p>Beach time, Pearl Harbor, a royal luau, and an Oʻahu circle tour.</p>
-        </div>
+      <h2>Beach & Island Conditions</h2>
+      <p class="intro">A quick morning check before swimming or heading around the island.</p>
+      <div class="card-grid">
+        <div class="card"><div class="emoji">🌊</div><h3>Surf & Rip Currents</h3><p>Conditions can vary sharply by shoreline. Check the official NWS surf forecast before choosing a beach.</p><div class="link-row"><a class="chip" href="https://www.weather.gov/hfo/SRF" target="_blank" rel="noopener">Open Surf Forecast</a></div></div>
+        <div class="card"><div class="emoji">☀️</div><h3>Sun & UV</h3><p>Use sun protection, reapply after swimming, and plan shade breaks during the strongest midday sun.</p><div class="link-row"><a class="chip" href="#packing">Sun Packing List</a></div></div>
+        <div class="card"><div class="emoji">💧</div><h3>Hydration</h3><p>Bring water on Pearl Harbor and island-tour days, especially when moving between air conditioning and outdoor heat.</p></div>
       </div>
     </div>
   </section>
 
-  <footer>
-    Made with aloha for David, Desiree, and Mom 🌺
-  </footer>
 
-  <script>
-    const tripDate = new Date("2026-08-08T00:00:00-07:00").getTime();
+  <section class="section alt" id="restaurants">
+    <div class="container">
+      <div class="section-kicker">Waikiki Dining Concierge</div>
+      <h2>Food & Drink Guide</h2>
+      <p class="intro">Curated choices for different moods and budgets—not just the most expensive options. Save favorites, rate meals, add notes, and attach a favorite dish photo.</p>
 
-    function updateCountdown(){
-      const distance = tripDate - Date.now();
-      if(distance <= 0){
-        document.getElementById("countdown").style.display = "none";
-        document.getElementById("celebrate").style.display = "block";
-        return;
-      }
-      const values = {
-        days: Math.floor(distance / 86400000),
-        hours: Math.floor((distance / 3600000) % 24),
-        minutes: Math.floor((distance / 60000) % 60),
-        seconds: Math.floor((distance / 1000) % 60)
-      };
-      Object.entries(values).forEach(([id,value])=>{
-        document.getElementById(id).textContent = String(value).padStart(2,"0");
-      });
+      <div class="tonight-pick" id="tonightPick">
+        <div>
+          <div class="today-label" style="color:#ffd9b8">Tonight's Recommendation</div>
+          <h3 id="tonightName">Katsumidori Sushi Tokyo</h3>
+          <p id="tonightWhy">Fresh, high-quality sushi at a reasonable price—an excellent fit when you want a memorable meal without a luxury omakase bill.</p>
+          <div class="tonight-meta" id="tonightMeta"></div>
+        </div>
+        <div class="tonight-actions">
+          <button class="btn light" id="newTonightPick" style="color:var(--deep)">Choose Another</button>
+          <a class="btn outline" id="tonightMap" target="_blank" rel="noopener" href="#">Apple Maps</a>
+        </div>
+      </div>
+
+      <div class="dining-filters" id="diningFilters" aria-label="Restaurant categories"></div>
+      <div class="restaurant-grid v5" id="restaurantGrid"></div>
+
+      <p class="small-note" style="text-align:center;margin-top:18px">
+        Hours, menus, pricing, and reservation policies can change. Confirm before heading out.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="maps">
+    <div class="container">
+      <h2>One-Tap Maps</h2>
+      <p class="intro">Quick directions for major trip locations.</p>
+      <div class="map-grid">
+        <div class="place"><h3>🏨 The Royal Hawaiian</h3><p>Our Waikiki home base.</p><a class="chip" target="_blank" rel="noopener" href="https://maps.apple.com/?q=The+Royal+Hawaiian+Waikiki">Open in Apple Maps</a></div>
+        <div class="place"><h3>🇺🇸 Pearl Harbor</h3><p>Historic visitor destination for our Monday tour.</p><a class="chip" target="_blank" rel="noopener" href="https://maps.apple.com/?q=Pearl+Harbor+National+Memorial">Open in Apple Maps</a></div>
+        <div class="place"><h3>🚌 Royal Hawaiian Avenue Pickup</h3><p>Tour pickup area near 340 Royal Hawaiian Avenue.</p><a class="chip" target="_blank" rel="noopener" href="https://maps.apple.com/?q=340+Royal+Hawaiian+Avenue+Honolulu">Open in Apple Maps</a></div>
+        <div class="place"><h3>🌺 Sheraton Aloha Landing</h3><p>Circle Island Tour pickup point.</p><a class="chip" target="_blank" rel="noopener" href="https://maps.apple.com/?q=Sheraton+Waikiki+Aloha+Landing">Open in Apple Maps</a></div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="section alt" id="packing">
+    <div class="container">
+      <h2>Personal Packing Lists</h2>
+      <p class="intro">Choose your traveler profile, customize your list, and keep your progress private on this device.</p>
+
+      <div class="packing-profile-bar">
+        <div>
+          <div class="today-label">Current traveler</div>
+          <h3 id="activeTravelerName" style="margin:6px 0 0;color:var(--deep)">Choose a traveler</h3>
+        </div>
+        <div class="profile-actions">
+          <button class="btn primary" id="chooseTravelerBtn">Choose Traveler</button>
+          <button class="btn outline" style="color:var(--deep)" id="switchTravelerBtn">Switch</button>
+        </div>
+      </div>
+
+      <div class="packing-top"><strong>Packing progress</strong><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div><div class="progress-text" id="progressText">0%</div></div>
+
+      <div class="suggestions-box">
+        <div>
+          <div class="today-label">Suggested for this trip</div>
+          <h3 style="margin:5px 0;color:var(--ocean2)">Helpful items based on the itinerary</h3>
+        </div>
+        <div class="suggestion-list" id="suggestionList"></div>
+      </div>
+
+      <div id="packingGroups" class="packing-groups"></div>
+
+      <div class="packing-editor-actions">
+        <button class="btn primary" id="addItemBtn">+ Add Item</button>
+        <button class="btn light" id="addCategoryBtn" style="color:var(--deep)">+ Add Category</button>
+        <button class="btn outline" style="color:var(--deep)" id="resetPacking">Reset My List</button>
+      </div>
+
+      <p class="small" style="text-align:center;margin-top:16px">
+        Lists are saved only on the current browser and device. David, Desiree, Mom, and guests each have separate lists.
+      </p>
+    </div>
+  </section>
+
+  <div class="modal-backdrop" id="travelerModal" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" id="closeTravelerModal" aria-label="Close">×</button>
+      <div class="eyebrow" style="color:var(--deep)">Welcome</div>
+      <h2 style="margin:0 0 10px;color:var(--deep)">Who is packing?</h2>
+      <p style="color:var(--muted);margin:0 0 22px">This choice is remembered on this device and can be changed later.</p>
+      <div class="traveler-grid">
+        <button class="traveler-option" data-traveler="David"><span>👨</span><strong>David</strong></button>
+        <button class="traveler-option" data-traveler="Desiree"><span>👩</span><strong>Desiree</strong></button>
+        <button class="traveler-option" data-traveler="Mom"><span>🎂</span><strong>Mom</strong></button>
+        <button class="traveler-option" data-traveler="Guest"><span>👤</span><strong>Guest</strong></button>
+      </div>
+    </div>
+  </div>
+<section class="section" id="memories">
+    <div class="container">
+      <h2>Daily Memories</h2>
+      <p class="intro">Choose one favorite photo and note per day. Photos are stored only in this browser, not uploaded publicly.</p>
+      <div class="memory-grid" id="memoryGrid"></div>
+      <p class="small" style="text-align:center;margin-top:18px">Large photos may exceed browser storage. A compressed copy is saved when possible.</p>
+    </div>
+  </section>
+
+  <section class="section dark" id="birthday">
+    <div class="container">
+      <div class="birthday">
+        <div class="eyebrow">A very special celebration</div>
+        <h3>Happy 70th Birthday, Mom! 🎂🌺</h3>
+        <p>May this trip be filled with laughter, beautiful sunsets, family time, and memories worthy of such an important milestone.</p>
+        <div class="pill">The Pink Palace • Waikiki • August 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">Made with aloha for David, Desiree, and Mom 🌺</footer>
+
+<script>
+  const tripStart = new Date("2026-08-08T00:00:00-10:00");
+  const tripEnd = new Date("2026-08-14T00:00:00-10:00");
+
+  function updateCountdown(){
+    const d = tripStart.getTime() - Date.now();
+    if(d <= 0){
+      document.getElementById("countdown").style.display="none";
+      return;
     }
-    updateCountdown();
-    setInterval(updateCountdown,1000);
+    const vals={
+      days:Math.floor(d/86400000),
+      hours:Math.floor((d/3600000)%24),
+      minutes:Math.floor((d/60000)%60),
+      seconds:Math.floor((d/1000)%60)
+    };
+    Object.entries(vals).forEach(([id,v])=>document.getElementById(id).textContent=String(v).padStart(2,"0"));
+  }
+  updateCountdown(); setInterval(updateCountdown,1000);
 
-    document.getElementById("share").addEventListener("click", async ()=>{
-      const data = {
-        title:"Hawaii Family Countdown",
-        text:"Our Hawaii family trip is almost here! 🌺🏝️",
-        url:window.location.href
-      };
-      try{
-        if(navigator.share){
-          await navigator.share(data);
-        }else{
-          await navigator.clipboard.writeText(window.location.href);
-          alert("Countdown link copied!");
-        }
-      }catch(e){}
+  const adventures = {
+    "2026-08-08": ["Aloha—welcome to Hawaii!","Check in at The Royal Hawaiian and enjoy the first Waikiki sunset.",["Check in and settle into the Pink Palace","Take an easy Waikiki walk","Enjoy a relaxed arrival-night dinner"]],
+    "2026-08-09": ["Royal Beach Day","A relaxing day on the Royal Beach with our reserved setup.",["Beach setup begins at 6:30 AM","Bring sunscreen, sunglasses, and water","Leave time for a sunset drink or dinner"]],
+    "2026-08-10": ["Pearl Harbor & Royal Luau","A meaningful morning followed by a special Hawaiian evening.",["Pearl Harbor check-in: 9:15 AM","Tour pickup: 9:55 AM","Royal Luau check-in: 4:30 PM"]],
+    "2026-08-11": ["Majestic Circle Island Tour","A full day exploring Oʻahu beyond Waikiki.",["Check in at 7:30 AM","Pickup at 8:05 AM","Bring walking shoes, water, and a rain layer"]],
+    "2026-08-12": ["Waikiki Free Day","A flexible day for shopping, beach time, and a memorable meal.",["Choose a favorite breakfast","Explore Waikiki or relax at the pool","Pick a special dinner"]],
+    "2026-08-13": ["Final Day in Paradise","Enjoy the last moments of Waikiki and celebrate the trip.",["Take final family photos","Pick up souvenirs","One last ocean view"]]
+  };
+
+  function honoluluDateKey(){
+    return new Intl.DateTimeFormat("en-CA",{timeZone:"Pacific/Honolulu",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
+  }
+  function setToday(){
+    const now=new Date(), key=honoluluDateKey();
+    const label=document.getElementById("todayLabel"), title=document.getElementById("todayTitle"), text=document.getElementById("todayText"), items=document.getElementById("todayItems");
+    let data;
+    if(now < tripStart){data=["Hawaii is getting closer","Start packing, review the itinerary, and get ready for Waikiki.",["Check your packing progress","Review tour pickup times","Add the site to everyone’s iPhone Home Screen"]];label.textContent="Trip preparation";}
+    else if(now >= tripEnd){data=["Mahalo for an unforgettable trip","The countdown has become a family keepsake.",["Save favorite photos","Write down favorite memories","Celebrate Mom’s 70th again and again"]];label.textContent="After the adventure";}
+    else {data=adventures[key]||["A day in paradise","Enjoy Waikiki and make a new family memory.",["Check today’s weather","Bring water and sun protection","Take a favorite family photo"]];label.textContent="Today in Hawaii";}
+    title.textContent=data[0];text.textContent=data[1];items.innerHTML=data[2].map(x=>`<div class="mini-item">${x}</div>`).join("");
+    document.getElementById("welcomeMessage").textContent=now<tripStart?"Counting down to Waikiki sunshine, family memories, and a very special celebration.":now<tripEnd?`Good morning! ${data[0]}.`:"Mahalo for celebrating Mom’s 70th birthday with us.";
+  }
+  setToday();
+
+  const weatherCodes={0:"Clear sky",1:"Mostly clear",2:"Partly cloudy",3:"Cloudy",45:"Foggy",48:"Foggy",51:"Light drizzle",53:"Drizzle",55:"Heavy drizzle",61:"Light rain",63:"Rain",65:"Heavy rain",80:"Passing showers",81:"Rain showers",82:"Heavy showers",95:"Thunderstorms"};
+  async function loadWeather(){
+    const url="https://api.open-meteo.com/v1/forecast?latitude=21.2767&longitude=-157.8275&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&daily=precipitation_probability_max,uv_index_max,sunset&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=Pacific%2FHonolulu&forecast_days=1";
+    try{
+      const r=await fetch(url); if(!r.ok) throw new Error();
+      const w=await r.json(), c=w.current, d=w.daily;
+      document.getElementById("weatherTemp").textContent=Math.round(c.temperature_2m)+"°";
+      document.getElementById("weatherDesc").textContent=weatherCodes[c.weather_code]||"Current conditions";
+      document.getElementById("feels").textContent=Math.round(c.apparent_temperature)+"°";
+      document.getElementById("humidity").textContent=c.relative_humidity_2m+"%";
+      document.getElementById("wind").textContent=Math.round(c.wind_speed_10m)+" mph";
+      document.getElementById("rain").textContent=(d.precipitation_probability_max?.[0]??"--")+"%";
+      document.getElementById("uv").textContent=(d.uv_index_max?.[0]??"--");
+      const sunset=d.sunset?.[0]; document.getElementById("sunset").textContent=sunset?new Date(sunset).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}):"--";
+      document.getElementById("weatherStatus").textContent="Updated "+new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})+". Forecast data: Open-Meteo.";
+    }catch(e){document.getElementById("weatherStatus").textContent="Live weather is temporarily unavailable. Use the NWS buttons below for official conditions."}
+  }
+  loadWeather();
+
+  document.getElementById("share").addEventListener("click",async()=>{
+    const data={title:"Hawaii Family Vacation",text:"Our Hawaii family trip countdown and companion 🌺",url:location.href};
+    try{if(navigator.share) await navigator.share(data); else {await navigator.clipboard.writeText(location.href);alert("Link copied!");}}catch(e){}
+  });
+
+
+
+  const restaurants = [
+    {
+      id:"katsumidori",name:"Katsumidori Sushi Tokyo",category:["Sushi","Best Value","ChatGPT Picks"],
+      price:"$$–$$$",distance:"Short ride from the Royal Hawaiian",badges:["⭐ Best Value","🍣 Sushi","Casual"],
+      description:"Fresh, polished sushi and Japanese dishes in a comfortable setting at Prince Waikiki.",
+      known:"Nigiri, tuna selections, scallop dishes, seasonal Japanese ingredients",
+      bestFor:"A quality sushi dinner without committing to a luxury omakase.",
+      tip:"Reservations are highly recommended; popular times can book up.",
+      map:"https://maps.apple.com/?q=Katsumidori+Sushi+Tokyo+Honolulu"
+    },
+    {
+      id:"doraku",name:"Doraku Sushi Waikiki",category:["Sushi","Happy Hour","Easy Walk","Best Value"],
+      price:"$$–$$$",distance:"Inside Royal Hawaiian Center",badges:["🚶 Easy Walk","🍹 Lively","🍣 Sushi"],
+      description:"Convenient sushi-and-izakaya choice with a full bar in the heart of Waikiki.",
+      known:"Creative rolls, sashimi, izakaya dishes, cocktails",
+      bestFor:"An easy, energetic dinner close to the hotel.",
+      tip:"A strong option when the group wants sushi plus cooked Japanese dishes.",
+      map:"https://maps.apple.com/?q=Doraku+Sushi+Waikiki"
+    },
+    {
+      id:"magurospot",name:"Maguro Spot",category:["Sushi","Casual","Best Value","Lunch"],
+      price:"$",distance:"Walkable in Waikiki",badges:["💰 Budget Friendly","🥡 Casual","🐟 Fresh Fish"],
+      description:"A simple, casual stop for customizable poke bowls and fresh tuna.",
+      known:"Poke bowls, ahi, quick lunch",
+      bestFor:"A fast beach-day lunch or casual meal.",
+      tip:"This is more poke than traditional sushi, but it scratches the fresh-fish itch at a lower price.",
+      map:"https://maps.apple.com/?q=Maguro+Spot+Waikiki"
+    },
+    {
+      id:"magurobrothers",name:"Maguro Brothers Hawaii",category:["Sushi","Casual","Best Value","Lunch"],
+      price:"$",distance:"Waikiki location",badges:["🐟 Sashimi","💰 Great Value","Casual"],
+      description:"Popular casual fish stop known for straightforward sashimi, poke, and rice bowls.",
+      known:"Fresh tuna, sashimi bowls, poke",
+      bestFor:"A low-key lunch when fish quality matters more than atmosphere.",
+      tip:"Check current hours because casual fish counters can have limited service windows.",
+      map:"https://maps.apple.com/?q=Maguro+Brothers+Waikiki"
+    },
+    {
+      id:"sushisho",name:"Sushi Sho",category:["Sushi","Special Occasion","Fine Dining"],
+      price:"$$$$",distance:"Short ride to The Ritz-Carlton Residences",badges:["💎 Worth the Splurge","Omakase","Special Occasion"],
+      description:"A highly specialized omakase experience for a serious sushi night.",
+      known:"Chef-driven omakase, Japanese technique, Hawaii influences",
+      bestFor:"One major splurge meal for dedicated sushi lovers.",
+      tip:"Treat this as an event, not a casual dinner. Book well ahead and confirm current policies.",
+      map:"https://maps.apple.com/?q=Sushi+Sho+Waikiki"
+    },
+    {
+      id:"housewithoutakey",name:"House Without A Key",category:["Sunset","Happy Hour","Hawaiian","ChatGPT Picks","Easy Walk"],
+      price:"$$–$$$",distance:"Easy beachfront walk",badges:["🌅 Sunset","🎶 Live Music","🚶 Easy Walk"],
+      description:"An iconic open-air setting for cocktails, Hawaiian music, and sunset views.",
+      known:"Mai Tais, sunset cocktails, Hawaiian entertainment",
+      bestFor:"A relaxed first-night or pre-dinner experience.",
+      tip:"Arrive before sunset and allow time to enjoy the music rather than rushing through.",
+      map:"https://maps.apple.com/?q=House+Without+A+Key+Honolulu"
+    },
+    {
+      id:"azure",name:"Azure",category:["Seafood","Fine Dining","Special Occasion","Romantic"],
+      price:"$$$$",distance:"At The Royal Hawaiian",badges:["🐟 Seafood","💎 Special Dinner","At Hotel"],
+      description:"Upscale seafood in a romantic Royal Hawaiian setting.",
+      known:"Seafood, tasting-style presentations, polished service",
+      bestFor:"A birthday or special family dinner without leaving the hotel.",
+      tip:"Confirm current operating days and reserve in advance.",
+      map:"https://maps.apple.com/?q=Azure+Restaurant+Waikiki"
+    },
+    {
+      id:"orchids",name:"Orchids",category:["Breakfast","Fine Dining","Romantic","Easy Walk"],
+      price:"$$$–$$$$",distance:"Short walk to Halekulani",badges:["🌊 Oceanfront","🥞 Brunch","Elegant"],
+      description:"Elegant oceanfront dining, especially appealing for breakfast, brunch, or a refined meal.",
+      known:"Breakfast, brunch, seafood, ocean views",
+      bestFor:"A polished morning or celebratory meal.",
+      tip:"Request outdoor seating when conditions allow.",
+      map:"https://maps.apple.com/?q=Orchids+Honolulu"
+    },
+    {
+      id:"monkeypod",name:"Monkeypod Kitchen Waikiki",category:["Happy Hour","Hawaiian","Best Value","ChatGPT Picks"],
+      price:"$$–$$$",distance:"Walkable in Waikiki",badges:["🍹 Cocktails","🎶 Lively","Hawaii Focused"],
+      description:"A lively Hawaii-focused menu with popular cocktails and a broad menu for groups.",
+      known:"Mai Tais, pies, local ingredients, happy-hour energy",
+      bestFor:"A fun group meal when everyone wants different choices.",
+      tip:"A good fallback when you want atmosphere and variety rather than a formal dinner.",
+      map:"https://maps.apple.com/?q=Monkeypod+Kitchen+Waikiki"
+    },
+    {
+      id:"hulagrill",name:"Hula Grill Waikiki",category:["Seafood","Hawaiian","Sunset","Casual"],
+      price:"$$–$$$",distance:"Central Waikiki",badges:["🌊 Ocean View","Casual","Hawaiian"],
+      description:"Casual ocean views and Hawaiian-inspired food in the center of Waikiki.",
+      known:"Fish, tropical drinks, beach views",
+      bestFor:"An easy vacation meal with a classic Waikiki feel.",
+      tip:"Prioritize the view and atmosphere; choose a reservation time near sunset.",
+      map:"https://maps.apple.com/?q=Hula+Grill+Waikiki"
+    },
+    {
+      id:"basalt",name:"Basalt",category:["Breakfast","Best Value","Casual"],
+      price:"$$",distance:"Walkable in Waikiki",badges:["🥞 Breakfast","Casual","Good Start"],
+      description:"A convenient breakfast and brunch option with modern island-influenced dishes.",
+      known:"Breakfast plates, coffee, brunch",
+      bestFor:"A substantial breakfast before a full day.",
+      tip:"Use it on a flexible morning rather than before a tightly timed tour.",
+      map:"https://maps.apple.com/?q=Basalt+Waikiki"
+    },
+    {
+      id:"islandvintage",name:"Island Vintage Coffee",category:["Breakfast","Coffee","Casual","Best Value"],
+      price:"$–$$",distance:"Very close in Royal Hawaiian Center",badges:["☕ Coffee","🚶 Easy Walk","Quick"],
+      description:"Convenient coffee, acai bowls, and light breakfast options close to the hotel.",
+      known:"Coffee, acai bowls, light breakfast",
+      bestFor:"A quicker morning when you do not want a full sit-down breakfast.",
+      tip:"Lines can build; mobile ordering may be useful when available.",
+      map:"https://maps.apple.com/?q=Island+Vintage+Coffee+Royal+Hawaiian+Center"
+    },
+    {
+      id:"leonards",name:"Leonard's Bakery",category:["Dessert","Casual","Best Value","ChatGPT Picks"],
+      price:"$",distance:"Short ride from Waikiki",badges:["🍩 Malasadas","Iconic","Worth a Detour"],
+      description:"A classic Honolulu stop for warm malasadas.",
+      known:"Fresh malasadas and filled malasadas",
+      bestFor:"A snack stop during another outing rather than a full standalone meal.",
+      tip:"Eat them warm. It is most efficient as a detour when already traveling outside Waikiki.",
+      map:"https://maps.apple.com/?q=Leonard%27s+Bakery+Honolulu"
+    }
+  ];
+
+  const categories=["All","Sushi","Best Value","Easy Walk","Breakfast","Happy Hour","Sunset","Seafood","Hawaiian","Fine Dining","Dessert","ChatGPT Picks","Favorites"];
+  const restaurantGrid=document.getElementById("restaurantGrid");
+  const filterWrap=document.getElementById("diningFilters");
+  let currentDiningFilter="All";
+
+  function restaurantKey(id,suffix){return `hawaii-v5-restaurant-${id}-${suffix}`}
+
+  function renderDiningFilters(){
+    filterWrap.innerHTML="";
+    categories.forEach(cat=>{
+      const b=document.createElement("button");
+      b.className="filter-btn"+(cat===currentDiningFilter?" active":"");
+      b.textContent=cat;
+      b.onclick=()=>{currentDiningFilter=cat;renderDiningFilters();renderRestaurants();};
+      filterWrap.appendChild(b);
     });
-  </script>
+  }
+
+  function resizePhoto(file, callback){
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const img=new Image();
+      img.onload=()=>{
+        const max=800,scale=Math.min(1,max/img.width),canvas=document.createElement("canvas");
+        canvas.width=Math.round(img.width*scale);canvas.height=Math.round(img.height*scale);
+        canvas.getContext("2d").drawImage(img,0,0,canvas.width,canvas.height);
+        callback(canvas.toDataURL("image/jpeg",.7));
+      };
+      img.src=e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function renderRestaurants(){
+    restaurantGrid.innerHTML="";
+    restaurants.forEach(r=>{
+      const favorite=localStorage.getItem(restaurantKey(r.id,"favorite"))==="1";
+      const visible=currentDiningFilter==="All" ||
+        (currentDiningFilter==="Favorites" && favorite) ||
+        r.category.includes(currentDiningFilter);
+      if(!visible)return;
+
+      const rating=Number(localStorage.getItem(restaurantKey(r.id,"rating"))||0);
+      const note=localStorage.getItem(restaurantKey(r.id,"note"))||"";
+      const photo=localStorage.getItem(restaurantKey(r.id,"photo"))||"";
+
+      const card=document.createElement("article");
+      card.className="restaurant-card";
+      card.innerHTML=`
+        <div class="restaurant-head">
+          <div><h3>${r.name}</h3><div class="restaurant-sub">${r.price} · ${r.distance}</div></div>
+          <button class="heart-btn ${favorite?"saved":""}" aria-label="Save favorite">${favorite?"❤️":"♡"}</button>
+        </div>
+        <div class="badge-row">${r.badges.map(b=>`<span class="badge">${b}</span>`).join("")}</div>
+        <p>${r.description}</p>
+        <p><span class="known-for">Known for:</span> ${r.known}</p>
+        <p><span class="known-for">Best for:</span> ${r.bestFor}</p>
+        <p><span class="known-for">Tip:</span> ${r.tip}</p>
+        <div class="restaurant-actions">
+          <a class="chip" target="_blank" rel="noopener" href="${r.map}">Apple Maps</a>
+          <label class="chip photo-upload-label">📷 Favorite Dish<input type="file" accept="image/*" hidden></label>
+        </div>
+        <img class="dish-preview ${photo?"show":""}" alt="Favorite dish at ${r.name}" ${photo?`src="${photo}"`:""}>
+        <div class="rating-row">
+          <strong>Your rating</strong>
+          <div class="stars" aria-label="Rate ${r.name}">${[1,2,3,4,5].map(n=>`<button class="star ${n<=rating?"on":""}" data-rating="${n}">★</button>`).join("")}</div>
+        </div>
+        <textarea class="restaurant-note" placeholder="What did you order? Would you return?">${note}</textarea>
+      `;
+      restaurantGrid.appendChild(card);
+
+      card.querySelector(".heart-btn").onclick=()=>{
+        const next=localStorage.getItem(restaurantKey(r.id,"favorite"))==="1"?"0":"1";
+        localStorage.setItem(restaurantKey(r.id,"favorite"),next);
+        renderDiningFilters();renderRestaurants();
+      };
+      card.querySelectorAll(".star").forEach(star=>star.onclick=()=>{
+        localStorage.setItem(restaurantKey(r.id,"rating"),star.dataset.rating);
+        renderRestaurants();
+      });
+      card.querySelector("textarea").oninput=e=>localStorage.setItem(restaurantKey(r.id,"note"),e.target.value);
+      card.querySelector('input[type="file"]').onchange=e=>{
+        const file=e.target.files[0];if(!file)return;
+        resizePhoto(file,data=>{
+          try{localStorage.setItem(restaurantKey(r.id,"photo"),data)}catch(err){alert("The image is shown, but this browser does not have enough storage to save it permanently.");}
+          renderRestaurants();
+        });
+      };
+    });
+  }
+
+  function chooseTonight(){
+    const preferred=restaurants.filter(r=>r.category.some(c=>["ChatGPT Picks","Sushi","Sunset","Best Value"].includes(c)));
+    const index=Number(localStorage.getItem("hawaii-v5-tonight-index")||0)%preferred.length;
+    const r=preferred[index];
+    document.getElementById("tonightName").textContent=r.name;
+    document.getElementById("tonightWhy").textContent=r.bestFor+" "+r.tip;
+    document.getElementById("tonightMeta").innerHTML=[r.price,r.distance,...r.badges.slice(0,2)].map(x=>`<span>${x}</span>`).join("");
+    document.getElementById("tonightMap").href=r.map;
+  }
+
+  document.getElementById("newTonightPick").onclick=()=>{
+    const current=Number(localStorage.getItem("hawaii-v5-tonight-index")||0);
+    localStorage.setItem("hawaii-v5-tonight-index",String(current+1));
+    chooseTonight();
+  };
+
+  renderDiningFilters();
+  renderRestaurants();
+  chooseTonight();
+
+  const travelerDefaults = {
+    David: {
+      "Clothing":["Lightweight shirts and tops","Shorts and breathable casual wear","Resort-casual dinner outfits","Royal Luau outfit","Light sweater or overshirt","Swim trunks"],
+      "Beach & Sun":["Reef-conscious sunscreen","Sunglasses","Sun hat or cap","Swim goggles","Swim cover-up or rash guard"],
+      "Tours & Comfort":["Comfortable walking shoes","Sandals or flip-flops","Packable rain jacket or poncho","Reusable water bottle","Small day bag"],
+      "Travel Essentials":["Photo ID and wallet","Prescription medicines","Phone and watch chargers","Portable battery","Headphones for the flight"]
+    },
+    Desiree: {
+      "Clothing":["Lightweight tops","Shorts and breathable casual wear","Resort-casual dinner outfits","Royal Luau outfit","Light sweater or wrap","Swimsuits"],
+      "Beach & Sun":["Reef-conscious sunscreen","Sunglasses","Sun hat","Swim cover-up","Beach bag"],
+      "Toiletries":["Makeup","Hair products","Skincare","Personal toiletries"],
+      "Tours & Comfort":["Comfortable walking shoes","Sandals","Packable rain jacket or poncho","Reusable water bottle","Small day bag"],
+      "Travel Essentials":["Photo ID and wallet","Prescription medicines","Phone and watch chargers","Portable battery","Headphones for the flight"]
+    },
+    Mom: {
+      "Clothing":["Lightweight tops","Comfortable shorts or pants","Resort-casual dinner outfit","Royal Luau outfit","Sweater for air conditioning","Swimsuit"],
+      "Beach & Sun":["Reef-conscious sunscreen","Sunglasses","Sun hat","Swim cover-up"],
+      "Health & Comfort":["Prescription medications","Reading glasses","Comfortable walking shoes","Supportive sandals","Packable rain jacket","Reusable water bottle"],
+      "Travel Essentials":["Photo ID and wallet","Phone charger","Portable battery","Small day bag","Flight comfort item"]
+    },
+    Guest: {
+      "Clothing":["Lightweight shirts and tops","Shorts and breathable casual wear","Resort-casual dinner outfit","Swimsuit","Light sweater"],
+      "Beach & Sun":["Reef-conscious sunscreen","Sunglasses","Sun hat","Swim cover-up"],
+      "Tours & Comfort":["Comfortable walking shoes","Sandals","Packable rain jacket","Reusable water bottle","Small day bag"],
+      "Travel Essentials":["Photo ID and wallet","Prescription medicines","Phone charger","Portable battery","Headphones for the flight"]
+    }
+  };
+
+  const itinerarySuggestions = [
+    {item:"Pearl Harbor walking shoes",category:"Tours & Comfort"},
+    {item:"Water bottle for tours",category:"Tours & Comfort"},
+    {item:"Royal Luau outfit",category:"Clothing"},
+    {item:"Light rain layer",category:"Tours & Comfort"},
+    {item:"Sun hat for Circle Island Tour",category:"Beach & Sun"},
+    {item:"Portable phone battery",category:"Travel Essentials"}
+  ];
+
+  let activeTraveler = localStorage.getItem("hawaii-active-traveler") || "";
+  let packingData = null;
+
+  function storageKey(){ return "hawaii-v4-packing-" + activeTraveler; }
+
+  function deepCopy(obj){ return JSON.parse(JSON.stringify(obj)); }
+
+  function normalizeDefaults(name){
+    const raw = travelerDefaults[name] || travelerDefaults.Guest;
+    const out = {};
+    Object.entries(raw).forEach(([cat,items])=>{
+      out[cat]=items.map((text,i)=>({id:cat.toLowerCase().replace(/\W+/g,"-")+"-"+i,text,checked:false}));
+    });
+    return out;
+  }
+
+  function loadPackingData(){
+    if(!activeTraveler) return;
+    const saved=localStorage.getItem(storageKey());
+    packingData=saved?JSON.parse(saved):normalizeDefaults(activeTraveler);
+  }
+
+  function savePackingData(){
+    if(activeTraveler && packingData) localStorage.setItem(storageKey(),JSON.stringify(packingData));
+  }
+
+  function openTravelerModal(){
+    document.getElementById("travelerModal").classList.add("open");
+    document.getElementById("travelerModal").setAttribute("aria-hidden","false");
+  }
+  function closeTravelerModal(){
+    document.getElementById("travelerModal").classList.remove("open");
+    document.getElementById("travelerModal").setAttribute("aria-hidden","true");
+  }
+
+  function setTraveler(name){
+    activeTraveler=name;
+    localStorage.setItem("hawaii-active-traveler",name);
+    loadPackingData();
+    document.getElementById("activeTravelerName").textContent=name+"'s Packing List";
+    closeTravelerModal();
+    renderPacking();
+  }
+
+  function allItems(){
+    return packingData?Object.values(packingData).flat():[];
+  }
+
+  function updateProgress(){
+    const items=allItems(),done=items.filter(x=>x.checked).length,p=items.length?Math.round(done/items.length*100):0;
+    document.getElementById("progressFill").style.width=p+"%";
+    document.getElementById("progressText").textContent=p+"%";
+  }
+
+  function renderSuggestions(){
+    const el=document.getElementById("suggestionList");
+    const existing=allItems().map(x=>x.text.toLowerCase());
+    el.innerHTML="";
+    itinerarySuggestions.forEach(s=>{
+      const btn=document.createElement("button");
+      const exists=existing.includes(s.item.toLowerCase());
+      btn.className="suggestion-chip"+(exists?" added":"");
+      btn.textContent=(exists?"✓ ":"+ ")+s.item;
+      btn.disabled=exists;
+      btn.addEventListener("click",()=>{
+        if(!packingData[s.category]) packingData[s.category]=[];
+        packingData[s.category].push({id:"item-"+Date.now(),text:s.item,checked:false});
+        savePackingData();renderPacking();
+      });
+      el.appendChild(btn);
+    });
+  }
+
+  function renderPacking(){
+    if(!activeTraveler){
+      document.getElementById("activeTravelerName").textContent="Choose a traveler";
+      document.getElementById("packingGroups").innerHTML="";
+      openTravelerModal();
+      return;
+    }
+    if(!packingData) loadPackingData();
+    document.getElementById("activeTravelerName").textContent=activeTraveler+"'s Packing List";
+    const groups=document.getElementById("packingGroups");
+    groups.innerHTML="";
+    Object.entries(packingData).forEach(([category,items])=>{
+      const card=document.createElement("div");
+      card.className="packing-group";
+      const head=document.createElement("div");
+      head.className="packing-group-head";
+      head.innerHTML=`<h3>${category}</h3><div class="packing-group-actions"><button class="icon-btn" title="Rename category">✏️</button><button class="icon-btn" title="Delete category">🗑️</button></div>`;
+      const [renameCat,deleteCat]=head.querySelectorAll("button");
+      renameCat.addEventListener("click",()=>{
+        const next=prompt("Rename category:",category);
+        if(next && next.trim() && next.trim()!==category){
+          packingData[next.trim()]=packingData[category];delete packingData[category];savePackingData();renderPacking();
+        }
+      });
+      deleteCat.addEventListener("click",()=>{
+        if(confirm(`Delete "${category}" and all its items?`)){delete packingData[category];savePackingData();renderPacking();}
+      });
+      card.appendChild(head);
+      const list=document.createElement("div");list.className="checklist";
+      items.forEach(item=>{
+        const row=document.createElement("div");row.className="packing-row";
+        row.innerHTML=`<label class="check-item"><input type="checkbox" ${item.checked?"checked":""}><span></span></label><div class="packing-item-actions"><button class="icon-btn" title="Rename item">✏️</button><button class="icon-btn" title="Delete item">🗑️</button></div>`;
+        row.querySelector("span").textContent=item.text;
+        row.querySelector("input").addEventListener("change",e=>{item.checked=e.target.checked;savePackingData();updateProgress();});
+        const btns=row.querySelectorAll("button");
+        btns[0].addEventListener("click",()=>{
+          const next=prompt("Rename item:",item.text);
+          if(next && next.trim()){item.text=next.trim();savePackingData();renderPacking();}
+        });
+        btns[1].addEventListener("click",()=>{
+          if(confirm(`Delete "${item.text}"?`)){packingData[category]=packingData[category].filter(x=>x.id!==item.id);savePackingData();renderPacking();}
+        });
+        list.appendChild(row);
+      });
+      card.appendChild(list);groups.appendChild(card);
+    });
+    renderSuggestions();updateProgress();
+  }
+
+  document.getElementById("chooseTravelerBtn").addEventListener("click",openTravelerModal);
+  document.getElementById("switchTravelerBtn").addEventListener("click",openTravelerModal);
+  document.getElementById("closeTravelerModal").addEventListener("click",closeTravelerModal);
+  document.getElementById("travelerModal").addEventListener("click",e=>{if(e.target.id==="travelerModal")closeTravelerModal();});
+  document.querySelectorAll(".traveler-option").forEach(btn=>btn.addEventListener("click",()=>setTraveler(btn.dataset.traveler)));
+
+  document.getElementById("addItemBtn").addEventListener("click",()=>{
+    if(!activeTraveler){openTravelerModal();return;}
+    const cats=Object.keys(packingData);
+    if(!cats.length){alert("Add a category first.");return;}
+    const item=prompt("New packing item:");
+    if(!item||!item.trim())return;
+    const category=prompt("Add it to which category?\n\n"+cats.join("\n"),cats[0]);
+    const matched=cats.find(c=>c.toLowerCase()===String(category||"").trim().toLowerCase());
+    if(!matched){alert("Category not found.");return;}
+    packingData[matched].push({id:"item-"+Date.now(),text:item.trim(),checked:false});
+    savePackingData();renderPacking();
+  });
+
+  document.getElementById("addCategoryBtn").addEventListener("click",()=>{
+    if(!activeTraveler){openTravelerModal();return;}
+    const name=prompt("New category name:");
+    if(!name||!name.trim())return;
+    const clean=name.trim();
+    if(packingData[clean]){alert("That category already exists.");return;}
+    packingData[clean]=[];
+    savePackingData();renderPacking();
+  });
+
+  document.getElementById("resetPacking").addEventListener("click",()=>{
+    if(!activeTraveler)return;
+    if(confirm(`Reset ${activeTraveler}'s list to the suggested starting list?`)){
+      packingData=normalizeDefaults(activeTraveler);savePackingData();renderPacking();
+    }
+  });
+
+  loadPackingData();
+  renderPacking();
+
+  const memoryDays=["Arrival Day","Royal Beach","Pearl Harbor & Luau","Circle Island","Waikiki Free Day","Final Day"];
+  const grid=document.getElementById("memoryGrid");
+  memoryDays.forEach((name,i)=>{
+    const card=document.createElement("article");card.className="memory";
+    card.innerHTML=`<h3>${name}</h3><div class="photo-frame" id="frame${i}">📷<br>Choose a favorite photo</div><input id="photo${i}" type="file" accept="image/*"><textarea id="note${i}" placeholder="Favorite memory or note…"></textarea>`;
+    grid.appendChild(card);
+    const note=card.querySelector("textarea"),input=card.querySelector("input"),frame=card.querySelector(".photo-frame");
+    note.value=localStorage.getItem("hawaii-note-"+i)||"";note.addEventListener("input",()=>localStorage.setItem("hawaii-note-"+i,note.value));
+    const saved=localStorage.getItem("hawaii-photo-"+i);if(saved) frame.innerHTML=`<img src="${saved}" alt="${name} memory">`;
+    input.addEventListener("change",()=>{
+      const file=input.files[0]; if(!file)return;
+      const reader=new FileReader();reader.onload=e=>{
+        const img=new Image();img.onload=()=>{
+          const canvas=document.createElement("canvas"),max=900,scale=Math.min(1,max/img.width);canvas.width=img.width*scale;canvas.height=img.height*scale;
+          canvas.getContext("2d").drawImage(img,0,0,canvas.width,canvas.height);
+          const data=canvas.toDataURL("image/jpeg",.72);
+          frame.innerHTML=`<img src="${data}" alt="${name} memory">`;
+          try{localStorage.setItem("hawaii-photo-"+i,data)}catch(err){alert("The photo is displayed, but this browser did not have enough storage to save it permanently.")}
+        };img.src=e.target.result;
+      };reader.readAsDataURL(file);
+    });
+  });
+
+  if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
+</script>
 </body>
 </html>

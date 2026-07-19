@@ -1,11 +1,21 @@
 {
-"name":"Hawaii Family Countdown",
-"short_name":"Hawaii",
-"display":"standalone",
-"start_url":"./",
-"background_color":"#0d7584",
-"theme_color":"#0d7584",
-"icons":[
-{"src":"icon-192.png","sizes":"192x192","type":"image/png"},
-{"src":"icon-512.png","sizes":"512x512","type":"image/png"}]
+  "name": "Hawaii Family Vacation Companion V5",
+  "short_name": "Hawaii V5",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b7482",
+  "theme_color": "#702447",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }

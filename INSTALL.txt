@@ -1,0 +1,28 @@
+HAWAII COMPANION VERSION 5
+
+WHAT'S NEW
+- Lean single-page design; no frameworks or heavy dependencies
+- Dining filters by category and mood
+- Sushi choices ranging from casual/value to special occasion
+- Tonight's Recommendation card
+- Save restaurants as favorites
+- Personal 1–5 star ratings
+- Personal dining notes
+- Favorite dish photo upload
+- Existing V4 profiles, customizable packing, weather, itinerary, maps, and daily memories
+
+GITHUB UPDATE
+1. Open the Daraica22/hawaii-countdown repository.
+2. Replace the existing site files with:
+   index.html
+   manifest.webmanifest
+   sw.js
+   icon-192.png
+   icon-512.png
+3. Commit with: Hawaii Companion Version 5
+4. Wait for GitHub Pages deployment to finish.
+
+IMPORTANT
+- Packing data, restaurant ratings, notes, favorites, and photos are stored locally in each browser.
+- They do not sync between family members or devices.
+- Restaurant hours, prices, and availability can change; verify before visiting.
